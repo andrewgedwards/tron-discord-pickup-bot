@@ -246,6 +246,9 @@ function addPlayer(list, msg) {
   }
   const newList = list.values.map(player => `<@${player.id}>`);
   msg.channel.send(`${list.options.name} list updated (${list.values.length}/${list.options.maxPlayers}): ${newList}`);
+
+  updateChannelTopic(msg);
+
   return true;
 }
 
@@ -297,6 +300,17 @@ function isAnyoneAdded() {
     }
   });
   return result;
+}
+
+function updateChannelTopic(msg) {
+  newTopic = '';
+  aggList.forEach(function (list) {
+    if (list.values.length != 0) {
+      var listMap = list.values.map(player => `<@${player.id}>`);
+      newTopic += `${list.options.name} (${list.values.length}/${list.options.maxPlayers}): ${listMap}\n`;
+    }
+  });
+  msg.channel.topic = newTopic;
 }
 
 // Remove helper functions
