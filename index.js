@@ -310,7 +310,7 @@ function updateChannelTopic(msg) {
       newTopic += `${list.options.name} (${list.values.length}/${list.options.maxPlayers}): ${listMap}\n`;
     }
   });
-  msg.channel.topic = newTopic;
+  msg.channel.setTopic(newTopic);
 }
 
 // Remove helper functions
