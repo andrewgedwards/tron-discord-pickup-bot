@@ -304,15 +304,16 @@ function isAnyoneAdded() {
 
 function updateChannelTopic(msg) {
   var newTopic = '';
-  if (!isAnyoneAdded()) {
+  if (isAnyoneAdded()) {
+    aggList.forEach(function (list) {
+      if (list.values.length != 0) {
+        newTopic += `**${list.options.name}** (${list.values.length}/${list.options.maxPlayers}): ${list.values.map(player => player.name)}\n`;
+      }
+    });
+  } else {
     newTopic += 'No one is added yet.';
   }
-  aggList.forEach(function (list) {
-    if (list.values.length != 0) {
-      newTopic += `**${list.options.name}** (${list.values.length}/${list.options.maxPlayers}): ${list.values.map(player => player.name)}\n`;
-    }
-  });
-  msg.channel.setTopic(newTopic);
+  console.log(msg.channel.setTopic(newTopic).catch());
   return;
 }
 
