@@ -59,6 +59,7 @@ client.on('message', msg => {
   }
 
   if (msg.author.id === client.user.id) {
+    updateChannelTopic(msg);
     //console.log(`SKIP: Wrote this one myself`);
     return;
   }
@@ -244,10 +245,9 @@ function addPlayer(list, msg) {
     list.values = [];
     return false;
   }
+
   const newList = list.values.map(player => `<@${player.id}>`);
   msg.channel.send(`${list.options.name} list updated (${list.values.length}/${list.options.maxPlayers}): ${newList}`);
-  msg.channel.setTopic('');
-  updateChannelTopic(msg);
 
   return true;
 }
