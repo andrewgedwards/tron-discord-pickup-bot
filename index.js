@@ -303,7 +303,10 @@ function isAnyoneAdded() {
 }
 
 function updateChannelTopic(msg) {
-  newTopic = 'No one is added.';
+  var newTopic = '';
+  if (!isAnyoneAdded()) {
+    newTopic += 'No one is added yet.';
+  }
   aggList.forEach(function (list) {
     if (list.values.length != 0) {
       newTopic += `**${list.options.name}** (${list.values.length}/${list.options.maxPlayers}): ${list.values.map(player => player.name)}\n`;
