@@ -135,8 +135,12 @@ client.on('message', msg => {
     removePlayer(tstList, msg);
     return;
   }
-  if (msg.content.toLowerCase() === '!remove fort') {
+  if (msg.content.toLowerCase() === '!remove fort6') {
     removePlayer(fortList6, msg);
+    return;
+  }
+  if (msg.content.toLowerCase() === '!remove fort5') {
+    removePlayer(fortList5, msg);
     return;
   }
   if (msg.content.toLowerCase() === '!remove wst') {
