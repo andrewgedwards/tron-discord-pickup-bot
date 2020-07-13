@@ -313,7 +313,9 @@ function updateChannelTopic(msg) {
   } else {
     newTopic += 'No one is added yet.';
   }
-  console.log(msg.channel.setTopic(newTopic).catch());
+  msg.channel.setTopic(newTopic)
+    .then(newChannel => console.log(`Channel's new topic is ${newChannel.topic}`))
+    .catch(console.error);
   return;
 }
 
