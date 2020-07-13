@@ -313,7 +313,7 @@ function updateChannelTopic(msg) {
   } else {
     newTopic += 'No one is added yet.';
   }
-  console.log(msg.channel.setTopic(newTopic).catch());
+  console.log(await msg.channel.setTopic(newTopic).catch());
   return;
 }
 
