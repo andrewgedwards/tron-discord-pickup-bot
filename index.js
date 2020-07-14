@@ -302,10 +302,16 @@ function isAnyoneAdded() {
 
 async function updateChannelTopic(msg) {
   var newTopic = '';
+  var first = true;
   if (isAnyoneAdded()) {
     aggList.forEach(function (list) {
       if (list.values.length != 0) {
-        newTopic += `**${list.options.name}** (${list.values.length}/${list.options.maxPlayers}): ${list.values.map(player => player.name)} ||`;
+        if (first) {
+          first = false;
+        } else {
+          newTopic += ` | `;
+        }
+        newTopic += `**${list.options.name}** (${list.values.length}/${list.options.maxPlayers}): ${list.values.map(player => player.name)}`;
       }
     });
   } else {
@@ -315,7 +321,7 @@ async function updateChannelTopic(msg) {
     if (newTopic === '') throw new Error('Topic cannot be blank.');
     setTimeout(() => resolve('Updated channel topic.'), 2000);
   });*/
-
+  console.log(newTopic);
   try {
     await msg.channel.setTopic(newTopic);
   } catch (error) {
