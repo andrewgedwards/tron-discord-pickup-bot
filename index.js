@@ -49,7 +49,7 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', msg => {
+client.on('message', async msg => {
 
   // skip message if it meets the following conditions
 
@@ -59,9 +59,14 @@ client.on('message', msg => {
   }
 
   if (msg.author.id === client.user.id) {
-    msg.channel.setTopic(updateChannelTopic(msg))
+    try {
+      await msg.channel.setTopic(updateChannelTopic(msg));
+    } catch (error) {
+      console.log(error);
+    }
+    /*msg.channel.setTopic(updateChannelTopic(msg))
       .then(newChannel => console.log(`Channel's new topic is ${newChannel.topic}`))
-      .catch(console.error);
+      .catch(console.error);*/
     return;
   }
 
