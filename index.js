@@ -300,21 +300,27 @@ function isAnyoneAdded() {
   return result;
 }
 
-function updateChannelTopic(msg) {
+async function updateChannelTopic(msg) {
   var newTopic = '';
   if (isAnyoneAdded()) {
     aggList.forEach(function (list) {
       if (list.values.length != 0) {
-        newTopic += `**${list.options.name}** (${list.values.length}/${list.options.maxPlayers}): ${list.values.map(player => player.name)}\n`;
+        newTopic += `**${list.options.name}** (${list.values.length}/${list.options.maxPlayers}): ${list.values.map(player => player.name)} ||`;
       }
     });
   } else {
     newTopic += 'No one is added yet.';
   }
-  msg.channel.setTopic(newTopic)
-    .then(newChannel => console.log(`Channel's new topic is ${newChannel.topic}`))
-    .catch(console.error);
-  return;
+  /*return new Promise(resolve => {
+    if (newTopic === '') throw new Error('Topic cannot be blank.');
+    setTimeout(() => resolve('Updated channel topic.'), 2000);
+  });*/
+
+  try {
+    await msg.channel.setTopic(newTopic);
+  } catch (error) {
+    console.error;
+  }
 }
 
 // Remove helper functions
