@@ -109,9 +109,7 @@ client.on('message', msg => {
   if (msg.content.toLowerCase() === '!add') {
     if (addPlayer(wstList, msg)) {
       if (addPlayer(tstList, msg)) {
-        if (addPlayer(fortList5, msg)) {
-          addPlayer(fortList6, msg);
-        }
+        addPlayer(fortList6, msg);
       }
     }
     return;
@@ -228,12 +226,8 @@ function addPlayer(list, msg) {
     msg.reply(`Can't add you to ${list.options.name} because it's full`);
     return true;
   }
-  const newPlayer = { id: msg.author.id, name: "" };
-  if (msg.member.nickname) {
-    newPlayer.name = msg.member.nickname;
-  } else {
-    newPlayer.name = msg.author.username;
-  }
+  const newPlayer = { id: msg.author.id, name: msg.member.displayName };
+
   if (list.values.some(player => player.id === newPlayer.id)) {
     msg.reply(`You are already on the ${list.options.name} list`);
     return true;
@@ -274,7 +268,7 @@ function printList(list, channel) {
   if (list.values.length === 0) {
     channel.send(`${list.options.name} list is empty!`);
   } else {
-    const newList = list.values.map(player => `<@${player.id}>`);
+    const newList = list.values.map(player => player.name);
     channel.send(`${list.options.name} list updated (${list.values.length}/${list.options.maxPlayers}): ${newList}`);
   }
 }
