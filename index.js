@@ -59,8 +59,9 @@ client.on('message', msg => {
   }
 
   if (msg.author.id === client.user.id) {
-    updateChannelTopic(msg);
-    //console.log(`SKIP: Wrote this one myself`);
+    msg.channel.setTopic(updateChannelTopic(msg))
+      .then(newChannel => console.log(`Channel's new topic is ${newChannel.topic}`))
+      .catch(console.error);
     return;
   }
 
@@ -300,7 +301,7 @@ function isAnyoneAdded() {
   return result;
 }
 
-async function updateChannelTopic(msg) {
+function updateChannelTopic(msg) {
   var newTopic = '';
   var first = true;
   if (isAnyoneAdded()) {
@@ -322,11 +323,7 @@ async function updateChannelTopic(msg) {
     setTimeout(() => resolve('Updated channel topic.'), 2000);
   });*/
   console.log(newTopic);
-  try {
-    await msg.channel.setTopic(newTopic);
-  } catch (error) {
-    console.error;
-  }
+  return newTopic;
 }
 
 // Remove helper functions
